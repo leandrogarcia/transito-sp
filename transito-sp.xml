@@ -13,31 +13,20 @@
             <execute><![CDATA[ 
                 url = "http://maplink.uol.com.br/v2/corredores/Sao-Paulo-SP.htm"; 
 				var xpath = "//table[@class='corredores']/tr";
-                //query = y.query("select * from html where url='" + url + "' and xpath='" + xpath + "');
 				query = y.query("select * from html where url='" + url + "'"); 
-				//var str = query.results.toString();
                 var str = query.results..table..tr; 
-				
-                //rows = table..tr; 
-				//r = table.@class;
-                
-                output = <stories></stories>;
+                output = <corredores></corredores>;
  
-                /*
-                * iterate three TRs at a time 
-                * each triplet represents one story
-                * i is the title row, i+1 is the meta info, i+2 is a spacer
-                */
                 for(var i=0;i<170;i++) {
                     //titleRow = rows[i]
                     
                     title = str[i]..td[1].a;
                     situacao = str[i]..td[3].span[1];
 
-                    story = <story></story> 
-                    story.title = title.toString();
-                    story.situacao = situacao.toString();
-                    output.stories += story;
+                    corredor = <corredor></corredor> 
+                    corredor.title = title.toString();
+                    corredor.situacao = situacao.toString();
+                    output.corredores += corredor;
                 }
 
                 response.object = output;
