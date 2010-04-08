@@ -28,7 +28,6 @@
                     corredor.situacao = situacao.toString();
                     output.corredores += corredor;
                 }
-
                 response.object = output;
             ]]></execute> 
         </select> 
