@@ -1,0 +1,2 @@
+v. 0.1
+Aplicação que utiliza a API YQL do yahoo para ler o conteúdo de uma página de transito. Utiliza Jquery para exibir esses dados em forma de  tabela.
