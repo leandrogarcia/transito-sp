@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>Trabalhando com YQL</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+	<meta http-equiv="content-language" content="pt-br" />
+	<meta name="description" content="Trabalhando com YQL" />
+	<meta name="keywords" content="Trabalhando com YQL" />
+	<style type="text/css">
+		*{margin:0;padding:0;border:0}
+		body{font:13px arial}
+		#main{padding:30px}
+		table{border-collapse:collapse;width:500px}
+		table tr td,table tr th{border:1px solid #000;padding:2px 5px}
+		table tr th{background:#999;color:#fff}
+		#content{min-height:100px;*height:100px}
+		h1{font-size:18px;margin-bottom:10px}
+		img{margin:50px 0 0 240px}
+	</style>	
+</head>
+
+<body>
+
+<div id="main">
+	<h1>Situação do transito nos principais corredores de São Paulo</h1>
+	<div id="content"><img src="images/ajax-loader.gif" alt=""/></div>
+</div>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.getJSON(
+			  "http://query.yahooapis.com/v1/public/yql?q=USE%20%22http%3A%2F%2Fgithub.com%2Fleandrogarcia%2Ftransito-sp%2Fraw%2Fmaster%2Ftransito.xml%22%20AS%20transito%3B%20%20%0ASELECT%20*%20FROM%20transito&format=json", // the ? at the end is the key
+			  function(data) {
+				data = data.query.results.corredores;
+				var conteudo = '<table cellspacing="0" cellpadding="0" border="1"><thead><tr><th>Corredor</th><th>Situação</th></tr></thead>';
+				for(i=0;i<data.corredor.length;i++){
+					conteudo+="<tr><td> "+data.corredor[i].title+" </td><td> "+data.corredor[i].situacao+"</td></tr>";
+				}
+				conteudo+="</table>";
+				$('#content').html(conteudo);
+			  }
+			);
+	});
+</script>
+
+</body>
+</html>
