@@ -1,0 +1,35 @@
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd"> 
+    <meta> 
+        <sampleQuery>select * from {table};</sampleQuery> 
+        <author>Leandro Garcia</author> 
+    </meta> 
+    <bindings> 
+        <select itemPath="" produces="XML"> 
+            <urls> 
+                <url>http://maplink.uol.com.br/v2/corredores/Sao-Paulo-SP.htm</url> 
+            </urls> 
+            <inputs> 
+            </inputs> 
+            <execute><![CDATA[ 
+                url = "http://maplink.uol.com.br/v2/corredores/Sao-Paulo-SP.htm"; 
+				var xpath = "//table[@class='corredores']/tr";
+				query = y.query("select * from html where url='" + url + "'"); 
+                var str = query.results..table..tr; 
+                output = <corredores></corredores>;
+ 
+                for(var i=0;i<170;i++) {
+                    //titleRow = rows[i]
+                    
+                    title = str[i]..td[1].a;
+                    situacao = str[i]..td[3].span[1];
+
+                    corredor = <corredor></corredor> 
+                    corredor.title = title.toString();
+                    corredor.situacao = situacao.toString();
+                    output.corredores += corredor;
+                }
+                response.object = output;
+            ]]></execute> 
+        </select> 
+    </bindings> 
+</table>
